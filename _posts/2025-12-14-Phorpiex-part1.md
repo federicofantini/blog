@@ -36,10 +36,11 @@ INDEX
 Phorpiex (aka Trik) is a long-lived botnet used for spam, ransomware delivery, cryptomining and, in 2021 variants named Twizt, [cryptocurrency clipping](https://research.checkpoint.com/2021/phorpiex-botnet-is-back-with-a-new-twizt-hijacking-hundreds-of-crypto-transactions/).
 Because it has been around for years and keeps evolving, it's a good candidate to test whether code-reuse clustering can still find meaningful structure across variants.
 
-<div align="center" style="display:flex; justify-content:center; gap:20px;">
-  <img src="/blog/assets/videos/Phorpiex/2-home.gif" width="550" />
-  <img src="/blog/assets/videos/Phorpiex/1-clusters.gif" width="550" />
+<div align="center" style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; padding: 10px;">
+  <img src="/blog/assets/videos/Phorpiex/2-home.gif" style="max-width: 100%; height: auto;"/>
+  <img src="/blog/assets/videos/Phorpiex/1-clusters.gif" style="max-width: 100%; height: auto;"/>
 </div>
+
 
 In this post, I'm not trying to "rediscover" the Phorpiex strain. Instead, I'd like to answer a more focused question: *If I throw a small set of Phorpiex samples at [MalCluster](https://github.com/federicofantini/MalCluster), do I get back a cluster that reflects the core of the family?*
 
