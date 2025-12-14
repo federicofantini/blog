@@ -20,7 +20,7 @@ body {
 
 @media screen and (min-width: 900px) {
   .content * {
-    max-width: 900px;
+    max-width: 1200px;
   }
 }
 

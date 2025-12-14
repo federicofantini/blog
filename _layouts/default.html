@@ -17,9 +17,21 @@
     <meta name="msapplication-TileColor" content="#da532c">
     <link rel="stylesheet" href="{{ "/assets/css/main.css" | relative_url }}">
     <link rel="stylesheet" href="{{ "/assets/css/blog.css" | relative_url }}">
+    <link rel="stylesheet" href="{{ "/assets/css/markmap.css" | relative_url }}">
     <link rel="stylesheet" href="{{ "/assets/css/post.css" | relative_url }}">
     <link rel="stylesheet" href="{{ "/assets/css/tag.css" | relative_url }}">
     <link rel="stylesheet" href="{{ "/assets/css/syntax.css" | relative_url }}">
+
+    {% if page.markmap %}
+      <script>
+        window.markmap = {
+          autoLoader: {
+            toolbar: true
+          }
+        };
+      </script>
+      <script src="https://cdn.jsdelivr.net/npm/markmap-autoloader@latest"></script>
+    {% endif %}
   </head>
 
   <body>

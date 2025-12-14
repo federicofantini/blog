@@ -1,0 +1,36 @@
+/* ------------------------------- MARKMAP --------------------------------------- */
+
+.markmap {
+    width: 100%;
+    max-width: 100%;
+    margin: 2rem auto;
+    padding: 1rem 0;
+}
+
+.markmap > svg {
+    width: 100% !important;
+    height: 500px !important;
+}
+
+.post .markmap * {
+    max-width: none !important;
+    overflow-wrap: normal !important;
+}
+
+.mm-toolbar {
+    position: fixed !important;
+}
+
+.markmap-node {
+    color: black !important;
+}
+
+/* 
+-----------------------------------------------------------------------------
+-------------------------------D-----A-----R-----K---------------------------
+-----------------------------------------------------------------------------
+*/
+
+html[data-theme='dark'] .markmap-node {
+    color: white !important;
+}

@@ -52,21 +52,23 @@
   font-size: 42px;
 }
 
-.post-tags, .post-author {
+.post-tags, .post-authors {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: space-between;
-  margin-bottom: 10px;
+  text-align: left;
+  padding-top: 3px;
+  color: #08309e;
 }
 
-.post-tags a, .post-author a {
+.post-tags a, .post-authors a,
+.post-tags p, .post-authors p {
   font-size: 18px;
   font-weight: bold;
   opacity: 0.85;
-  margin: auto;
   color: #08309e;
   padding: 0 5px;
+  margin: 0;
 }
 
 .post-meta {
@@ -105,8 +107,10 @@ html[data-theme='dark'] .post-content a {
   color: #20C20E;
 }
 
-html[data-theme='dark'] .post-tags a,
-html[data-theme='dark'] .post-author a {
+html[data-theme='dark'] .post-tags p,
+html[data-theme='dark'] .post-authors p,
+html[data-theme='dark'] .post-tags p a,
+html[data-theme='dark'] .post-authors p a {
   color: #20C20E;
 }
 

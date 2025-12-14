@@ -6,13 +6,18 @@ layout: default
   <header>
     <h1 class="post-title">{{ page.title }}</h1>
     <div class="post-tags">
-      {% for tag in page.tags %}
-      <a href="{{ site.baseurl }}/tag/{{ tag | downcase }}">#{{ tag | downcase }}</a>
-      {% endfor %}
-    </div>
-    <div class="post-author">
-      <a href="https://federicofantini.net">{{ page.author }}</a>
-    </div>
+        <p>Tags:</p>
+        {% for tag in page.tags %}
+        <p><a href="{{ site.baseurl }}/tag/{{ tag | downcase }}">#{{ tag | downcase }}</a></p>
+        {% endfor %}
+      </div>
+      <hr>
+      <div class="post-authors">
+        <p>Authors:</p>
+        {% for author in page.authors %}
+        <p><a href="{{ author.url }}">{{ author.name }}</a>{% unless forloop.last %} {% endunless %}</p>
+        {% endfor %}
+      </div>
     <div class="post-date">
       <p>{{ page.date | date: "%e %B, %Y %H:%M %Z" }}</p>
     </div>
