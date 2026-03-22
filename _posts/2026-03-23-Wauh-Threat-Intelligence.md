@@ -48,6 +48,13 @@ INDEX
 
 
 ## 0. Introduction
+
+This project is built using the [Wazuh security platform](https://wazuh.com/?utm_source=ambassadors&utm_medium=referral&utm_campaign=ambassadors+program).
+
+If you are interested in contributing to the community, you can also learn more about the [Wazuh Ambassadors Program](https://wazuh.com/ambassadors-program/?utm_source=ambassadors&utm_medium=referral&utm_campaign=ambassadors+program).
+
+---
+
 In today's cybersecurity landscape, threat intelligence (TI) plays a crucial role in detecting, understanding, and responding to attacks. In enterprise environments, TI is often handled through dedicated CTI platforms and mature ingestion pipelines. Integrating external threat feeds in a structured and maintainable way is still something that requires deliberate engineering effort.
 
 Wazuh is an open-source security platform for threat detection, response, and compliance, designed with flexibility and community-driven extensibility in mind. It supports a wide range of use cases including log analysis, file integrity monitoring, compliance reporting, and threat hunting.
