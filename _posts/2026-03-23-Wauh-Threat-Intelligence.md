@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Automating Threat Intelligence Alerts in Wazuh: A Practical Homelab Pipeline"
-tags: ["Threat Intelligence", "Homelab", "Wazuh", "Sysmon", "Suricata"]
+tags: ["Threat-Intelligence", "Homelab", "Wazuh", "Sysmon", "Suricata"]
 authors:
   - name: Federico Fantini
     url: "https://github.com/federicofantini"

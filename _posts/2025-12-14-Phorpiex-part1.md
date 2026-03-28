@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Phorpiex malware analysis – part 1: validating MalCluster on a real family"
-tags: ["Malware Analysis", "Phorpiex", "MalCluster", "Static Analysis"]
+tags: ["Malware-Analysis", "Phorpiex", "MalCluster", "Static-Analysis"]
 authors:
   - name: Federico Fantini
     url: "https://github.com/federicofantini"
