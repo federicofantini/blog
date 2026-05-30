@@ -1,66 +1,174 @@
 /* ------------------------------- POSTS --------------------------------------- */
 .posts {
-  padding-right: 15px;
-  padding-left: 15px;
-  margin-right: auto;
-  margin-left: auto;
+  width: 100%;
+  max-width: 100%;
+  margin-inline: auto;
 }
 
 .posts ul {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.9rem;
   list-style: none;
   padding-left: 0;
+  margin: 0;
 }
 
 .posts ul li {
-  border: 3px solid #08309e;
-  border-radius: 10px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) max-content;
+  grid-template-areas:
+    "title date"
+    "tags tags"
+    "authors authors"
+    "meta meta";
+  column-gap: 1.1rem;
+  row-gap: 0.55rem;
+  align-items: start;
+  overflow: hidden;
+  padding: 1.05rem 1.2rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: linear-gradient(180deg, var(--surface-1), var(--surface-2));
+  box-shadow: var(--shadow-sm);
+  content-visibility: auto;
+  contain-intrinsic-size: auto 220px;
+  transition:
+    transform var(--transition-medium),
+    box-shadow var(--transition-medium),
+    border-color var(--transition-medium),
+    background var(--transition-medium);
 }
 
-.posts ul li:not(:first-child) {
-  margin-top: 10px;
+.posts ul li:hover,
+.posts ul li:focus-within {
+  border-color: color-mix(in srgb, var(--accent) 48%, transparent);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-3px);
 }
 
 .posts ul li * {
-  width: 100%;
+  min-width: 0;
+}
+
+.posts ul li hr {
+  display: none;
 }
 
 .posts ul li .post-title {
-  font-weight: bolder;
-  font-size: 18px;
-  padding: 10px 0;
+  grid-area: title;
+  display: block;
+  color: var(--text-0);
+  background: transparent;
+  font-size: clamp(1.08rem, 1.55vw, 1.42rem);
+  font-weight: 800;
+  line-height: 1.22;
+  letter-spacing: -0.025em;
+  text-align: left;
   text-decoration: none;
-  text-align: center;
-  border-top-left-radius: 6px;
-  border-top-right-radius: 6px;
-  background-color: #eee;
-  color: #08309e;
+}
+
+.posts ul li .post-title:hover {
+  color: var(--accent-strong);
 }
 
 .posts ul li .post-title b {
-  padding: 0 5px;
+  padding: 0;
 }
 
+.posts ul li .post-tags,
+.posts ul li .post-authors {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: flex-start;
+  gap: 0.35rem;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  color: var(--accent);
+  text-align: left;
+}
+
+.posts ul li .post-tags {
+  grid-area: tags;
+}
+
+.posts ul li .post-authors {
+  grid-area: authors;
+}
 
 .posts ul li .post-tags a,
 .posts ul li .post-authors a,
 .posts ul li .post-tags p,
 .posts ul li .post-authors p {
   width: auto;
-  padding: 3px;
+  margin: 0;
+}
+
+.posts ul li .post-tags p:first-child,
+.posts ul li .post-authors p:first-child {
+  display: inline-flex;
+  align-items: center;
+  min-height: 26px;
+  color: var(--text-1);
+  font-size: 0.84rem;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+}
+
+.posts ul li .post-tags a,
+.posts ul li .post-authors a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 26px;
+  padding: 0.16rem 0.52rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--accent-soft);
+  text-decoration: none;
+  font-size: 0.88rem;
+  line-height: 1.1;
+}
+
+.posts ul li .post-tags a:hover,
+.posts ul li .post-authors a:hover {
+  border-color: var(--accent);
+  transform: translateY(-1px);
 }
 
 .posts ul li .post-meta {
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
-  padding: 20px;
+  grid-area: meta;
+  max-width: none;
+  margin: 0;
+  padding: 0.35rem 0 0;
+  color: var(--text-1);
+  font-size: clamp(0.98rem, 1.2vw, 1.08rem);
+  line-height: 1.55;
+  text-align: left;
+}
+
+.posts ul li .post-meta p {
+  display: -webkit-box;
+  overflow: hidden;
+  margin: 0;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
 }
 
 .posts ul li .post-date {
+  grid-area: date;
+  align-self: start;
+  color: var(--text-2);
+  font-size: 0.84rem;
+  line-height: 1.35;
   text-align: right;
+  white-space: nowrap;
+}
+
+.posts ul li .post-date p {
+  margin: 0;
 }
 
 .posts ul li .post-date em {
@@ -68,35 +176,24 @@
   font-style: italic;
 }
 
+@media screen and (max-width: 720px) {
+  .posts ul {
+    gap: 0.8rem;
+  }
 
+  .posts ul li {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      "title"
+      "tags"
+      "authors"
+      "meta"
+      "date";
+    padding: 1rem;
+  }
 
-
-
-/* 
------------------------------------------------------------------------------
--------------------------------D-----A-----R-----K---------------------------
------------------------------------------------------------------------------
-*/
-
-
-
-
-
-/* ------------------------------- POSTS --------------------------------------- */
-html[data-theme='dark'] .posts ul li {
-  border: 2px solid #20C20E;
-}
-
-html[data-theme='dark'] .posts ul li .post-title {
-  background-color: #444;
-  color: #20C20E;
-}
-
-html[data-theme='dark'] .posts ul li .post-tags {
-  color: #20C20E;
-}
-
-html[data-theme='dark'] .posts ul li .post-tags a,
-html[data-theme='dark'] .posts ul li .post-authors a {
-  color: #20C20E;
+  .posts ul li .post-date {
+    text-align: left;
+    white-space: normal;
+  }
 }

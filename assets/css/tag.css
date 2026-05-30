@@ -2,32 +2,39 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: space-around;
-  margin-top: 30px;
+  justify-content: center;
+  gap: 0.65rem;
+  width: 100%;
+  margin: 2rem auto 0;
 }
 
 .tag-cloud-links a {
-  font-size: 18px;
-  font-weight: bold;
-  opacity: 0.85;
-  color: #08309e;
-  margin: 0 5px;
+  display: inline-flex;
+  align-items: center;
+  min-height: 38px;
+  padding: 0.35rem 0.8rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface-1);
+  box-shadow: var(--shadow-sm);
+  color: var(--accent);
+  font-size: 1rem;
+  font-weight: 800;
+  opacity: 0.92;
+  text-decoration: none;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast), background var(--transition-fast);
 }
 
+.tag-cloud-links a::before {
+  content: "#";
+  opacity: 0.58;
+}
 
-
-
-
-/*
------------------------------------------------------------------------------
--------------------------------D-----A-----R-----K---------------------------
------------------------------------------------------------------------------
-*/
-
-
-
-
-
-html[data-theme='dark'] .tag-cloud-links a {
-  color: #20C20E;
+.tag-cloud-links a:hover,
+.tag-cloud-links a:focus-visible {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  box-shadow: var(--shadow-md);
+  color: var(--accent-strong);
+  transform: translateY(-2px);
 }

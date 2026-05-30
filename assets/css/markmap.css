@@ -1,36 +1,30 @@
 /* ------------------------------- MARKMAP --------------------------------------- */
-
 .markmap {
-    width: 100%;
-    max-width: 100%;
-    margin: 2rem auto;
-    padding: 1rem 0;
+  width: 100%;
+  max-width: 100%;
+  margin: 2rem auto;
+  padding: 0;
+  overflow: hidden;
 }
 
 .markmap > svg {
-    width: 100% !important;
-    height: 500px !important;
+  width: 100% !important;
+  height: min(560px, 72vh) !important;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--surface-1);
+  box-shadow: var(--shadow-sm);
 }
 
 .post .markmap * {
-    max-width: none !important;
-    overflow-wrap: normal !important;
+  max-width: none !important;
+  overflow-wrap: normal !important;
 }
 
 .mm-toolbar {
-    display: none !important;
+  display: none !important;
 }
 
 .markmap-node {
-    color: black !important;
-}
-
-/* 
------------------------------------------------------------------------------
--------------------------------D-----A-----R-----K---------------------------
------------------------------------------------------------------------------
-*/
-
-html[data-theme='dark'] .markmap-node {
-    color: white !important;
+  color: var(--text-0) !important;
 }

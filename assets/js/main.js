@@ -1,99 +1,122 @@
-/////// toggle light-dark theme
-function setDark() {
-  document.querySelector('#switch_dark_light_theme').checked = true;
-  document.documentElement.setAttribute('data-theme', 'dark');
-  document.cookie = "theme=dark; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/; SameSite=None; Secure";
+const THEME_STORAGE_KEY = 'preferred-theme';
+const DARK_THEME = 'dark';
+const LIGHT_THEME = 'light';
+const SCROLL_TOP_VISIBILITY_THRESHOLD = 420;
+
+const themeToggle = document.querySelector('#switch_dark_light_theme');
+const navToggle = document.querySelector('#nav-toggle');
+const navLinks = document.querySelectorAll('nav ul a');
+const scrollToTopButton = document.querySelector('.scroll-to-top');
+const prefersDarkTheme = window.matchMedia('(prefers-color-scheme: dark)');
+
+function persistTheme(theme) {
+  try {
+    localStorage.setItem(THEME_STORAGE_KEY, theme);
+  } catch (error) {
+    // Cookies keep the preference working in browsers where storage is blocked.
+    document.cookie = `theme=${theme}; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/; SameSite=Lax`;
+  }
 }
 
-function setLight() {
-  document.querySelector('#switch_dark_light_theme').checked = false;
-  document.documentElement.setAttribute('data-theme', 'light');
-  document.cookie = "theme=light; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/; SameSite=None; Secure";
-}
+function readPersistedTheme() {
+  try {
+    const storedTheme = localStorage.getItem(THEME_STORAGE_KEY);
 
-document.querySelector('#switch_dark_light_theme').addEventListener('change', function() {
-  if(this.checked)
-    setDark();
-  else
-    setLight();
-});
-
-let themecookie = decodeURIComponent(document.cookie);
-if (themecookie != "") { // site already visited
-  if (themecookie.includes('theme=dark'))
-    setDark();
-  else if (themecookie.includes('theme=light'))
-    setLight();
-}
-else { // first visit to the site
-  if (window.matchMedia('(prefers-color-scheme: dark)').matches)
-    setDark();
-  else
-    setLight();
-}
-
-
-
-/////// search blog post
-function filterElements(input, target) {
-  let inp = input.value.toLowerCase();
-  let targets = document.querySelectorAll(target);
-  for (let i = 0; i < targets.length; i++) {
-    if (inp.length == 0)
-      targets[i].style.display = "flex";
-    else {
-      if (targets[i].outerText.toLowerCase().includes(inp))
-        targets[i].style.display = "flex";
-      else
-        targets[i].style.display = "none";
+    if (storedTheme === DARK_THEME || storedTheme === LIGHT_THEME) {
+      return storedTheme;
     }
+  } catch (error) {
+    // Fall back to the legacy cookie used by previous versions of the site.
+  }
+
+  const cookieTheme = decodeURIComponent(document.cookie)
+    .split(';')
+    .map((value) => value.trim())
+    .find((value) => value.startsWith('theme='));
+
+  return cookieTheme ? cookieTheme.split('=')[1] : null;
+}
+
+function applyTheme(theme, shouldPersist = true) {
+  const normalizedTheme = theme === DARK_THEME ? DARK_THEME : LIGHT_THEME;
+
+  document.documentElement.setAttribute('data-theme', normalizedTheme);
+
+  if (themeToggle) {
+    themeToggle.checked = normalizedTheme === DARK_THEME;
+  }
+
+  if (shouldPersist) {
+    persistTheme(normalizedTheme);
   }
 }
 
-
-
-/////// disable scroll https://stackoverflow.com/questions/4770025/how-to-disable-scrolling-temporarily
-let keys = {37: 1, 38: 1, 39: 1, 40: 1}; // left: 37, up: 38, right: 39, down: 40,
-                                         // spacebar: 32, pageup: 33, pagedown: 34, end: 35, home: 36
-
-function preventDefault(e) {
-  e.preventDefault();
+function getInitialTheme() {
+  return readPersistedTheme() || (prefersDarkTheme.matches ? DARK_THEME : LIGHT_THEME);
 }
 
-function preventDefaultForScrollKeys(e) {
-  if (keys[e.keyCode]) {
-    preventDefault(e);
-    return false;
+function setMenuState(isOpen) {
+  if (!navToggle) {
+    return;
   }
-}
 
-let supportsPassive = false; // modern Chrome requires { passive: false } when adding event
-try {
-  window.addEventListener("test", null, Object.defineProperty({}, 'passive', {
-    get: function () { supportsPassive = true; }
-  }));
-} catch(e) {}
-
-let wheelOpt = supportsPassive ? { passive: false } : false;
-let wheelEvent = 'onwheel' in document.createElement('div') ? 'wheel' : 'mousewheel';
-
-function disableScroll() {
-  window.addEventListener('DOMMouseScroll', preventDefault, false); // older FF
-  window.addEventListener(wheelEvent, preventDefault, wheelOpt); // modern desktop
-  window.addEventListener('touchmove', preventDefault, wheelOpt); // mobile
-  window.addEventListener('keydown', preventDefaultForScrollKeys, false);
-}
-
-function enableScroll() {
-  window.removeEventListener('DOMMouseScroll', preventDefault, false);
-  window.removeEventListener(wheelEvent, preventDefault, wheelOpt);
-  window.removeEventListener('touchmove', preventDefault, wheelOpt);
-  window.removeEventListener('keydown', preventDefaultForScrollKeys, false);
+  navToggle.checked = isOpen;
+  document.body.classList.toggle('menu-open', isOpen);
 }
 
 function scroll_manager(input) {
-  if (input.checked)
-    disableScroll();
-  else
-    enableScroll();
+  setMenuState(input.checked);
 }
+
+function filterElements(input, target) {
+  const query = input.value.trim().toLowerCase();
+  const targets = document.querySelectorAll(target);
+
+  targets.forEach((element) => {
+    const isVisible = query.length === 0 || element.textContent.toLowerCase().includes(query);
+    element.classList.toggle('is-filtered-out', !isVisible);
+  });
+}
+
+
+function updateScrollToTopButton() {
+  if (!scrollToTopButton) {
+    return;
+  }
+
+  const shouldShowButton = window.scrollY > SCROLL_TOP_VISIBILITY_THRESHOLD;
+  scrollToTopButton.classList.toggle('is-visible', shouldShowButton);
+}
+
+applyTheme(getInitialTheme(), false);
+updateScrollToTopButton();
+
+themeToggle?.addEventListener('change', (event) => {
+  applyTheme(event.currentTarget.checked ? DARK_THEME : LIGHT_THEME);
+});
+
+prefersDarkTheme.addEventListener?.('change', (event) => {
+  if (!readPersistedTheme()) {
+    applyTheme(event.matches ? DARK_THEME : LIGHT_THEME, false);
+  }
+});
+
+navToggle?.addEventListener('change', (event) => {
+  setMenuState(event.currentTarget.checked);
+});
+
+navLinks.forEach((link) => {
+  link.addEventListener('click', () => setMenuState(false));
+});
+
+scrollToTopButton?.addEventListener('click', () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+window.addEventListener('scroll', updateScrollToTopButton, { passive: true });
+
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape') {
+    setMenuState(false);
+  }
+});
